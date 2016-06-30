@@ -1186,7 +1186,6 @@ void InitDAC(void)
  	  DAC_Cmd(DAC_Channel_1, ENABLE);
 
 
-
 }
 
 
@@ -1237,7 +1236,7 @@ void TIM3_IRQHandler()
     {
 
 
-    	//if (usingLeds)
+    	if (usingLeds)
     	{
 
         if (GPIO_ReadOutputDataBit(LEDGPIO, BlueLED))
