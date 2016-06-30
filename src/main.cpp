@@ -1153,21 +1153,11 @@ void InitDAC(void)
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_DAC, ENABLE);
 
 
-
-  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4;
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_Level_3; //50MHz
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-
-
   // Configure PA.04/05 (DAC) as output -------------------------
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
   GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_Level_3;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 
