@@ -1116,19 +1116,7 @@ uint32_t accumulatorStep=50;
 uint16_t CurrentTimerVal = 0;
 uint16_t outputDac=0.0;
 
-// generate Lookup Table
 
-
-void MakeShapes()
-{
-/*
-    for (int i=0;i<shapeSteps;i++)
-    {
-        sin_wave[i]= (2048)+(uint16_t) 4096*sin(M_PI*i/(shapeSteps)/2); // no values below zero
-
-    }
-*/
-}
 // configure board
 void  InitBoard()
 {
@@ -1158,14 +1146,6 @@ void  InitBoard()
         // turn on green  and blue Leds
         GPIO_SetBits(LEDGPIO, GreenLED);
         GPIO_ResetBits(LEDGPIO, BlueLED);
-        //GPIO_SetBits(LEDGPIO, BlueLED);
-        /*
-        GPIO_StructInit(&Buttons);
-        Buttons.GPIO_Pin = PushButton_Pin; //Set pins inside the struct
-        Buttons.GPIO_Mode = GPIO_Mode_IN; //Set GPIO pins as INPUT
-        Buttons.GPIO_PuPd = GPIO_PuPd_NOPULL; //No pullup required as pullup is external
-        GPIO_Init(GPIO_Init, &Buttons); //Assign struct to LED_GPIO
-		*/
 
 
 }
@@ -1196,9 +1176,7 @@ void InitDAC(void)
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 
-  /* Fill DAC InitStructure */
-  //DAC_InitStructure.DAC_Trigger = DAC_Trigger_T2_TRGO; /* Select the receiving end */
-  //DAC_InitStructure.DAC_OutputBuffer = DAC_OutputBuffer_Disable;
+  	  /* Fill DAC InitStructure */
 
   	  DAC_InitStructure.DAC_Trigger = DAC_Trigger_T3_TRGO;
   	  //DAC_InitStructure.DAC_Trigger = DAC_Trigger_Software;
@@ -1232,16 +1210,19 @@ void InitDAC(void)
 void InitTimer()
 {
 
+
+	/* http://visualgdb.com/tutorials/arm/stm32/timers/ */
+    /* http://forbot.pl/blog/artykuly/programowanie/kurs-stm32-7-liczniki-timery-w-praktyce-pwm-id8459 */
+
+
 	 	 	 SystemInit(); //Ensure CPU is running at correctly set clock speed
 	     	 SystemCoreClockUpdate(); //Update SystemCoreClock variable to current clock speed
 	     	 SysTick_Config(SystemCoreClock);
 
             TTB.TIM_CounterMode = TIM_CounterMode_Up;
-            TTB.TIM_Prescaler = 48000; //  1 kHz
-            TTB.TIM_Period = 1000; //1Hz;
-            //TTB.TIM_Period = 500-1; //100Hz;
-            //TTB.TIM_Period = 50-1; //1kHz
-            //TTB.TIM_Period = 1; //50kHz
+            TTB.TIM_Prescaler = 48000-1; //  1 kHz
+            TTB.TIM_Period = 1000-1; // -> 1 Hz;
+
             TTB.TIM_RepetitionCounter = 0;
 
             TIM_TimeBaseInit(TIM3, &TTB);
@@ -1249,13 +1230,9 @@ void InitTimer()
 
 
 
-            /* http://visualgdb.com/tutorials/arm/stm32/timers/ */
             TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
             TIM_SelectOutputTrigger(TIM3, TIM_TRGOSource_Update);
-            /* http://forbot.pl/blog/artykuly/programowanie/kurs-stm32-7-liczniki-timery-w-praktyce-pwm-id8459 */
 
-
-            //NVIC_InitStructure.NVIC_IRQChannel = TIM1_BRK_UP_TRG_COM_IRQn;
             NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;
             NVIC_InitStructure.NVIC_IRQChannelPriority = 0;
             NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
@@ -1275,7 +1252,7 @@ void TIM3_IRQHandler()
     {
 
 
-    	if (usingLeds)
+    	//if (usingLeds)
     	{
 
         if (GPIO_ReadOutputDataBit(LEDGPIO, BlueLED))
@@ -1290,6 +1267,7 @@ void TIM3_IRQHandler()
 
     	}
 
+    		/*
              lutIndex+=accumulatorStep;
              if (lutIndex>=32)
              {
@@ -1303,7 +1281,8 @@ void TIM3_IRQHandler()
 
         	 //DAC_SetChannel1Data(DAC_Align_12b_R, 0x07FF);
              DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);
-             //TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
+             */
+             TIM_ClearITPendingBit(TIM3, TIM_IT_Update);
 
     }
 
@@ -1323,20 +1302,7 @@ main(int argc, char* argv[])
   // Infinite loop
   while (1)
   {
-	  /*
-      lutIndex+=accumulatorStep;
-      if (lutIndex>=32)
-      {
-     	 lutIndex=0;
-      }
 
-      // send to output
-      DAC_SetChannel1Data(DAC_Align_12b_R,(uint16_t) Sine12bit[lutIndex] );
-      DAC_SetChannel1Data(DAC_Align_12b_R, 0x07FF);
-      DAC_SoftwareTriggerCmd(DAC_Channel_1, ENABLE);
-      //DAC_SetChannel1Data(DAC_Align_12b_R,(uint16_t) 4095  );
-      //DAC_SetChannel1Data(DAC_Align_12b_R,(uint16_t) 0  );
-	*/
 
   }
 
