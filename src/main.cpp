@@ -1,8 +1,3 @@
-// ----------------------------------------------------------------------------
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wunused-parameter"
-#pragma GCC diagnostic ignored "-Wmissing-declarations"
-#pragma GCC diagnostic ignored "-Wreturn-type"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -1289,11 +1284,9 @@ void TIM3_IRQHandler()
 }
 
 
-int
-main(int argc, char* argv[])
+int main()
 {
 
-    MakeShapes();
     InitBoard();
     InitDAC();
     InitTimer();
@@ -1319,8 +1312,3 @@ void assert_failed(uint8_t* file, uint32_t line) {
 }
 #endif
 
-#pragma GCC diagnostic pop
-
-// ----------------------------------------------------------------------------
-
-// ----------------------------------------------------------------------------
