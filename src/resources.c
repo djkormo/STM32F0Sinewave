@@ -3,6 +3,7 @@
 #include "diag/Trace.h"
 
 #include <math.h>
+
 #include "stm32f0xx.h"
 
 

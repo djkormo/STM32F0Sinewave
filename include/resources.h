@@ -3,7 +3,6 @@
 
 #include <stdint.h>
 
-
 extern const uint16_t Sine32_12bit [32];
 
 extern const uint16_t Sine1024_12bit [1024];

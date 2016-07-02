@@ -210,7 +210,6 @@ void TIM3_IRQHandler()
     	    	}
 
 
-
     	DAC_SetChannel1Data(DAC_Align_12b_R,(uint16_t) Sine1024_12bit[lutIndex] );
 */
     	//lutIndex+=lutStep;
